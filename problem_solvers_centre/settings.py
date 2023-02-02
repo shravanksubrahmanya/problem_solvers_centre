@@ -126,6 +126,8 @@ STATICFILES_DIR = [
 LOGIN_REDIRECT_URL = 'test'
 LOGOUT_REDIRECT_URL = 'thanks'
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

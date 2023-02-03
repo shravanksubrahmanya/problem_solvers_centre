@@ -45,3 +45,29 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # def get_absolute_url(self):
     #     return reverse("Solver_detail", kwargs={"pk": self.pk})
 
+
+'''
+Problem solver details
+'''
+# class ProblemSolverIndividual(models.Model):
+#     id_card_type_choices = (
+#         ('dl', 'Driving License'),
+#         ('adhaar', 'Adhaar Card'),
+#         ('passport', 'Passport'),
+#     )
+
+#     username = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, unique=True)
+#     first_name = models.CharField(max_length=50, blank=True, verbose_name='Firstname ')
+#     last_name = models.CharField(max_length=50, blank=True, verbose_name='Lastname ')
+#     id_card_type = models.CharField(max_length=50, choices=id_card_type_choices, default='adhaar', verbose_name= "Personal identity proof type ")
+#     id_card_number = models.CharField(max_length=10, verbose_name='Personal identity card number ')
+#     adrress = models.CharField(max_length=200, verbose_name="Address ")
+#     pin_code = models.IntegerField(max_length=6, verbose_name="Pin Code ")
+#     ph_no = models.PhoneNumberField(max_length= 10, verbose_name="Phone Number ")
+
+
+#     def __str__(self):
+#         return self.username
+
+#     # def get_absolute_url(self):
+#     #     return reverse("ProblemSolverIndividual_detail", kwargs={"pk": self.pk})

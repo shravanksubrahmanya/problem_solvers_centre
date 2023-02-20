@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 class SignUpForm(UserCreationForm):
 
     class Meta:
-        fields = ('user_type','account_type','email', 'password1', 'password2')
+        fields = ('user_type','username','email', 'password1', 'password2')
         model = CustomUser # no braces here since a model is not callable
 
     # def __init__(self, *args, **kwargs) -> None:

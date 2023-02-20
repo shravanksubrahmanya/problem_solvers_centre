@@ -13,14 +13,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('ps','Problem Solver'),
         ('pp','Problem Provider')
         )
-
-    account_type_choices = (
-        ('o','Organization'),
-        ('i','Individual')
-        )  
     
     user_type = models.CharField(max_length=5, choices=user_type_choices, default='pp', verbose_name="Who you are? ")
-    account_type = models.CharField(max_length=5, choices= account_type_choices, default='o', verbose_name="Account Type ")
+    username = models.CharField(max_length=50, verbose_name="Your username ", unique=True)
     email = models.EmailField(max_length=50, unique=True, blank=False, verbose_name="Your Email ")
     is_active = models.BooleanField(default=True) # anyone who signs up for thsi application is by default an active user   
     is_admin = models.BooleanField(default=False)
@@ -31,9 +26,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     # we are not placing password field here because the password field will always be required
-    REQUIRED_FIELDS = ['user_type', 'account_type']
+    REQUIRED_FIELDS = ['user_type','email']
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
 

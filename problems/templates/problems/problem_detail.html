@@ -30,15 +30,23 @@
     <div class="container"> 
         {% for solution in problem.solutions.all %}
         <br>
-            {% if user.is_authenticated or solution.aproved_solution %}
+            {% if user.is_authenticated and solution.rejected_solution == False or solution.approved_solution and solution.rejected_solution == False %}
                 {{solution.created_date}}
                 {% if not solution.approved_solution %}
-                    <a class = 'btn btn-primary' href="{% url 'problems:solution_approve' pk=solution.pk %}"> 
-                        <span class="glyphicon glyphicon-ok"> </span>
-                    </a>
-                    <a class = 'btn btn-default' href="{% url 'problems:solution_remove' pk=solution.pk %}"> 
-                        <span class="glyphicon glyphicon-remove"> </span>
-                    </a>
+                    {% if user.user_type == 'pp' %}
+                        <a class = 'btn btn-primary' href="{% url 'problems:solution_approve' pk=solution.pk %}"> 
+                            <span class="glyphicon glyphicon-ok"> </span>
+                        </a>
+                        <a class = 'btn btn-default' href="{% url 'problems:solution_reject' pk=solution.pk %}"> 
+                            <span class="glyphicon glyphicon-remove"> </span>
+                        </a>
+                    {% endif %}
+                    
+                    {% if user.user_type == 'ps' %}
+                        <a class = 'btn btn-default' href="{% url 'problems:solution_remove' pk=solution.pk %}"> 
+                            Delete
+                        </a>
+                    {% endif %}
                 {% endif %}
                 <p> {{solution.solution_title|safe|linebreaks}}</p>
                 <p> {{solution.solution_brief|safe|linebreaks}}</p>

@@ -56,9 +56,14 @@ class Solution(models.Model):
     solution_brief = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_solution = models.BooleanField(default=False)
+    rejected_solution = models.BooleanField(default=False)
 
     def approve(self):
         self.approved_solution = True
+        self.save()
+
+    def reject(self):
+        self.rejected_solution = True
         self.save()
 
     class Meta:

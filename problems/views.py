@@ -96,6 +96,12 @@ def solution_approve(request, pk):
     return redirect('problems:problem_detail', pk = solution.problem.pk)
 
 @login_required
+def solution_reject(request, pk):
+    solution = get_object_or_404(Solution, pk = pk)
+    solution.reject()
+    return redirect('problems:problem_detail', pk = solution.problem.pk)
+
+@login_required
 def solution_remove(request, pk):
     solution = get_object_or_404(Solution, pk = pk)
     problem_pk = solution.problem.pk

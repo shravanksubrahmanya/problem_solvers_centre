@@ -16,4 +16,5 @@ urlpatterns = [
     path("problem/<int:pk>/solution/", views.add_solution, name="add_solution"),
     path("solution/<int:pk>/approve", views.solution_approve, name="solution_approve"),
     path("solution/<int:pk>/remove", views.solution_remove, name="solution_remove"),
+    path("solution/<int:pk>/reject", views.solution_reject, name="solution_reject"),
 ]

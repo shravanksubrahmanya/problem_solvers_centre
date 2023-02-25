@@ -27,7 +27,7 @@
 
     <a href="{% url 'problems:add_solution' pk=problem.pk %}" class="btn btn-primary btn-comment"> Add Solution</a>
 
-    {% comment %} <div class="container"> 
+    <div class="container"> 
         {% for solution in problem.solutions.all %}
         <br>
             {% if user.is_authenticated or solution.aproved_solution %}
@@ -36,7 +36,7 @@
                     <a class = 'btn btn-primary' href="{% url 'problems:solution_approve' pk=solution.pk %}"> 
                         <span class="glyphicon glyphicon-ok"> </span>
                     </a>
-                    <a class = 'btn btn-default' href="{% url 'solution_remove' pk=solution.pk %}"> 
+                    <a class = 'btn btn-default' href="{% url 'problems:solution_remove' pk=solution.pk %}"> 
                         <span class="glyphicon glyphicon-remove"> </span>
                     </a>
                 {% endif %}
@@ -47,7 +47,7 @@
             {% empty %}
             <p> No Solution </p>
         {% endfor %}
-    </div> {% endcomment %}
+    </div>
     
 {% endblock content %}
 

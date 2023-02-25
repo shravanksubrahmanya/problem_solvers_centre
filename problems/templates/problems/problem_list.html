@@ -2,7 +2,6 @@
 
 {% block content %}
     <div class="centerstage"> 
-        <h1> list of problems </h1>
         {% for problem in problem_list %}
             <div class="problem_card"> 
                 <h1> <a href="{% url 'problems:problem_detail' pk=problem.pk %}"> {{problem.title}} </a></h1>

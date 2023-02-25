@@ -13,7 +13,7 @@ urlpatterns = [
     path("problem/<int:pk>/edit", views.ProblemUpdateView.as_view(), name="problem_edit"),
     path("problem/<int:pk>/remove", views.ProblemDeleteView.as_view(), name="problem_remove"),
 
-
-
     path("problem/<int:pk>/solution/", views.add_solution, name="add_solution"),
+    path("solution/<int:pk>/approve", views.solution_approve, name="solution_approve"),
+    path("solution/<int:pk>/remove", views.solution_remove, name="solution_remove"),
 ]

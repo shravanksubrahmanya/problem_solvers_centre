@@ -89,3 +89,15 @@ def add_solution(request, pk):
     return render(request, 'problems/solution_form.html', context= {'form':form})
 
 
+@login_required
+def solution_approve(request, pk):
+    solution = get_object_or_404(Solution, pk = pk)
+    solution.approve()
+    return redirect('problems:problem_detail', pk = solution.problem.pk)
+
+@login_required
+def solution_remove(request, pk):
+    solution = get_object_or_404(Solution, pk = pk)
+    problem_pk = solution.problem.pk
+    solution.delete()
+    return redirect('problems:problem_detail', pk=problem_pk)

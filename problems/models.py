@@ -46,7 +46,7 @@ class Problem(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("problem_detail", kwargs={"pk": self.pk})
+        return reverse("problems:problem_detail", kwargs={"pk": self.pk})
 
 
 # class Solution(models.Model):

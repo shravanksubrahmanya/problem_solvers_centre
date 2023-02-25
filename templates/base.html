@@ -44,6 +44,8 @@
 
                 <ul class = "nav navbar-nav navbar-right"> 
                     {% if user.is_authenticated %}
+                        <li> <a href="{% url 'problems:problem_new' %}"> New Problem </a> </li>
+                        <li> <a href="{% url 'problems:problem_draft_list' %}"> Drafts </a> </li>
                         <li> <a href="{% url 'logout' %}"> Logout </a> </li>
                         <li> <a> {{user.username}} </a> </li>
                     {% else %}

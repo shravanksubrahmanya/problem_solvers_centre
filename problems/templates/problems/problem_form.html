@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1> New Problem</h1>
+        <form class="problem-form" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="save btn btn-default" value="Post">
+        </form>
+    </div>
+    <script>  
+        {% comment %} .editable class is attatched to form as a widget {% endcomment %}
+        var editor = new MediumEditor('.editable');
+    </script>
+{% endblock content %}
+

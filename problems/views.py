@@ -46,6 +46,18 @@ class DraftListView(ListView, LoginRequiredMixin):
     def get_queryset(self):
         return Problem.objects.filter(published_date__isnull = True).order_by('created_date') # i.e select posts which have published date as null
 
+class ProblemUpdateView(UpdateView, LoginRequiredMixin):
+    model = Problem
+    template_name = "problem_form.html"
+    login_url = 'login/'
+    redirect_field_name = 'problems/problem_detail.html'
+    form_class = ProblemForm
+
+class ProblemDeleteView(DeleteView):
+    model = Problem
+    template_name = 'problem_confirm_delete.html'
+    success_url = reverse_lazy('problems:problem_list')
+
 
 
 #########################################################################################33

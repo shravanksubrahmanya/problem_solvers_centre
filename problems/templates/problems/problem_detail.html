@@ -13,15 +13,15 @@
     <p class="postcontent"> {{problem.problem_brief|safe|linebreaksbr}} </p>
     <p class="postcontent"> {{problem.problem_description|safe|linebreaksbr}} </p>
 
-    {% comment %} {% if user.is_authenticated %}
-        <a class = 'btn btn-primary' href="{% url 'problem_edit' pk=problem.pk %}"> 
+    {% if user.is_authenticated %}
+        <a class = 'btn btn-primary' href="{% url 'problems:problem_edit' pk=problem.pk %}"> 
             <span class="glyphicon glyphicon-pencil"> </span>
         </a>
 
-        <a class = 'btn btn-primary' href="{% url 'problem_remove' pk=problem.pk %}"> 
+        <a class = 'btn btn-primary' href="{% url 'problems:problem_remove' pk=problem.pk %}"> 
             <span class="glyphicon glyphicon-remove"> </span>
         </a>
-    {% endif %} {% endcomment %}
+    {% endif %}
 
     <hr>
 {% comment %} 

@@ -49,29 +49,24 @@ class Problem(models.Model):
         return reverse("problems:problem_detail", kwargs={"pk": self.pk})
 
 
-# class Solution(models.Model):
-#     problem = models.ForeignKey('Problems.Problem', related_name='solutions', on_delete=models.CASCADE) # this line connects each comment to an actual post
-#     author = models.CharField(max_length=200, verbose_name="Preferred Name")
-#     solution_brief = models.TextField()
-#     create_date = models.DateTimeField(default=timezone.now)
-#     approved_solution = models.BooleanField(default=False)
+class Solution(models.Model):
+    problem = models.ForeignKey('problems.Problem', related_name='solutions', on_delete=models.CASCADE) # this line connects each solution to an actual problem
+    author = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE)
+    solution_title = models.CharField(max_length=50, verbose_name="Solution title")
+    solution_brief = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_solution = models.BooleanField(default=False)
 
-#     def approve(self):
-#         self.approved_comment = True
-#         self.save()
+    def approve(self):
+        self.approved_solution = True
+        self.save()
 
-#     def __str__(self):
-#         return self.text
+    class Meta:
+        verbose_name = "Solution"
+        verbose_name_plural = "Solutions"
 
-#     def get_absolute_url(self):
-#         return reverse("post_list", kwargs={"pk": self.pk})
+    def __str__(self):
+        return self.solution_title
 
-#     class Meta:
-#         verbose_name = "Solution"
-#         verbose_name_plural = "Solutions"
-
-#     def __str__(self):
-#         return self.name
-
-#     def get_absolute_url(self):
-#         return reverse("problem_list", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("problems:solution_detail", kwargs={"pk": self.pk})

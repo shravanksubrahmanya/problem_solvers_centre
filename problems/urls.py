@@ -12,4 +12,8 @@ urlpatterns = [
     path("problem/<int:pk>/publish/", views.problem_publish, name="problem_publish"),
     path("problem/<int:pk>/edit", views.ProblemUpdateView.as_view(), name="problem_edit"),
     path("problem/<int:pk>/remove", views.ProblemDeleteView.as_view(), name="problem_remove"),
+
+
+
+    path("problem/<int:pk>/solution/", views.add_solution, name="add_solution"),
 ]

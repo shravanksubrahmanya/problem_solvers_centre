@@ -24,24 +24,25 @@
     {% endif %}
 
     <hr>
-{% comment %} 
-    <a href="{% url 'add_comments_to_post' pk=post.pk %}" class="btn btn-primary btn-comment"> Add Solution</a>
 
-    <div class="container"> 
-        {% for comment in post.comments.all %}
+    <a href="{% url 'problems:add_solution' pk=problem.pk %}" class="btn btn-primary btn-comment"> Add Solution</a>
+
+    {% comment %} <div class="container"> 
+        {% for solution in problem.solutions.all %}
         <br>
-            {% if user.is_authenticated or comment.aproved_comment %}
-                {{comment.create_date}}
-                {% if not comment.approved_comment %}
-                    <a class = 'btn btn-primary' href="{% url 'comment_approve' pk=comment.pk %}"> 
+            {% if user.is_authenticated or solution.aproved_solution %}
+                {{solution.created_date}}
+                {% if not solution.approved_solution %}
+                    <a class = 'btn btn-primary' href="{% url 'problems:solution_approve' pk=solution.pk %}"> 
                         <span class="glyphicon glyphicon-ok"> </span>
                     </a>
-                    <a class = 'btn btn-default' href="{% url 'comment_remove' pk=comment.pk %}"> 
+                    <a class = 'btn btn-default' href="{% url 'solution_remove' pk=solution.pk %}"> 
                         <span class="glyphicon glyphicon-remove"> </span>
                     </a>
                 {% endif %}
-                <p> {{comment.text|safe|linebreaks}}</p>
-                <p> Posted by: {{comment.author}} </p>
+                <p> {{solution.solution_title|safe|linebreaks}}</p>
+                <p> {{solution.solution_brief|safe|linebreaks}}</p>
+                <p> Posted by: {{solution.author}} </p>
             {% endif %}
             {% empty %}
             <p> No Solution </p>

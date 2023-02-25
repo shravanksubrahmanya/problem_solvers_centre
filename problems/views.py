@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-from problems.models import Problem
-from problems.forms import ProblemForm
+from problems.models import Problem, Solution
+from problems.forms import ProblemForm, SolutionForm
 
 
 # Create your views here.
@@ -68,4 +68,24 @@ def problem_publish(request,pk):
     problem = get_object_or_404(Problem, pk=pk)
     problem.publish()
     return redirect('problems:problem_detail', pk = pk)
+
+
+###########################################################################################
+
+@login_required
+def add_solution(request, pk):
+    problem = get_object_or_404(Problem, pk=pk)
+    if request.method == "POST":
+        form = SolutionForm(request.POST)
+
+        if form.is_valid():
+            solution = form.save(commit=False)
+            solution.problem = problem # connecting comment to post object, foreign key reference
+            solution.author = request.user
+            solution.save()
+            return redirect('problems:problem_detail', pk=problem.pk)
+    else:
+        form = SolutionForm() # 
+    return render(request, 'problems/solution_form.html', context= {'form':form})
+
 

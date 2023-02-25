@@ -12,3 +12,23 @@ from problems.models import Problem
 class ProblemsView(TemplateView):
     template_name = "problems_home.html"
 
+class ProblemListView(ListView):
+    model = Problem
+    template_name = "problem_list.html"
+
+    def get_queryset(self):
+        return Problem.objects.filter(published_date__lte = timezone.now()).order_by('-published_date')
+
+class ProblemDetailView(DetailView):
+    model = Problem
+    template_name = "problem_detail.html"
+
+
+#########################################################################################33
+
+@login_required
+def problem_publish(request,pk):
+    problem = get_object_or_404(Problem, pk=pk)
+    problem.publish()
+    return redirect('problems:problem_detail', pk = pk)
+

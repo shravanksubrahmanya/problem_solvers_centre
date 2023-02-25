@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 class="posttitle loader"> {{problem.title}} </h1>
+    {% if problem.published_date %}
+        {{problem.published_date}}
+    {% else %}
+        <a class="btn btn-default" href="{% url 'problems:problem_publish' pk=problem.pk %}"> Publish </a>
+    {% endif %}
+    <p class="postcontent"> Reward is INR. {{problem.problem_reward}} </p>
+    <p class="postcontent"> Poblem category is {{problem.problem_category}} </p>
+    <p class="postcontent"> {{problem.problem_brief|safe|linebreaksbr}} </p>
+    <p class="postcontent"> {{problem.problem_description|safe|linebreaksbr}} </p>
+
+    {% comment %} {% if user.is_authenticated %}
+        <a class = 'btn btn-primary' href="{% url 'problem_edit' pk=problem.pk %}"> 
+            <span class="glyphicon glyphicon-pencil"> </span>
+        </a>
+
+        <a class = 'btn btn-primary' href="{% url 'problem_remove' pk=problem.pk %}"> 
+            <span class="glyphicon glyphicon-remove"> </span>
+        </a>
+    {% endif %} {% endcomment %}
+
+    <hr>
+{% comment %} 
+    <a href="{% url 'add_comments_to_post' pk=post.pk %}" class="btn btn-primary btn-comment"> Add Solution</a>
+
+    <div class="container"> 
+        {% for comment in post.comments.all %}
+        <br>
+            {% if user.is_authenticated or comment.aproved_comment %}
+                {{comment.create_date}}
+                {% if not comment.approved_comment %}
+                    <a class = 'btn btn-primary' href="{% url 'comment_approve' pk=comment.pk %}"> 
+                        <span class="glyphicon glyphicon-ok"> </span>
+                    </a>
+                    <a class = 'btn btn-default' href="{% url 'comment_remove' pk=comment.pk %}"> 
+                        <span class="glyphicon glyphicon-remove"> </span>
+                    </a>
+                {% endif %}
+                <p> {{comment.text|safe|linebreaks}}</p>
+                <p> Posted by: {{comment.author}} </p>
+            {% endif %}
+            {% empty %}
+            <p> No Solution </p>
+        {% endfor %}
+    </div> {% endcomment %}
+    
+{% endblock content %}
+

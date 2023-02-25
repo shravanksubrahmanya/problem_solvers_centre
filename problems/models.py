@@ -31,12 +31,12 @@ class Problem(models.Model):
     problem_brief = models.TextField()
     # problem_description = models.TextField(verbose_name='Problem complete description ')
     problem_reward = models.IntegerField(verbose_name='Prize money for providing the solution ')
-    text = models.TextField()
+    problem_description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
-        self.publish_date = timezone.now()
+        self.published_date = timezone.now()
         self.save()
 
     # def approve_solutions(self):

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="centerstage"> 
+        {% for solution in solution_list %}
+            <div class="solution_card"> 
+                <h1> <a href="{% url 'problems:problem_detail' pk=solution.problem.pk %}"> {{solution.solution_title}} </a></h1>
+                <div class="date"> 
+                    <p> Posted on: {{solution.created_date|date:"D M Y"}}</p>
+                </div>
+                <div class="Solution content">
+                    <p> {{ solution.solution_brief|safe|linebreaks }} </p>
+                </div>
+                {% if solution.approved_solution %}
+                <p> Status: Approved </p>
+                {% else %}
+                <p> Status: Rejected </p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+

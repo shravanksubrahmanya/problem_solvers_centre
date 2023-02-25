@@ -48,6 +48,11 @@
                         </a>
                     {% endif %}
                 {% endif %}
+                {% if solution.approved_solution %}
+                <p> Status: Approved </p>
+                {% else %}
+                <p> Status: Rejected </p>
+                {% endif %}
                 <p> {{solution.solution_title|safe|linebreaks}}</p>
                 <p> {{solution.solution_brief|safe|linebreaks}}</p>
                 <p> Posted by: {{solution.author}} </p>

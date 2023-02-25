@@ -39,8 +39,8 @@ class Problem(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-    # def approve_solutions(self):
-    #     return self.solutions.filter(approved_solution = True)
+    def approve_solutions(self):
+        return self.solutions.filter(approved_solution = True) # to return total count of solutions
 
     def __str__(self):
         return self.title

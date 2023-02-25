@@ -48,7 +48,7 @@
                             <li> <a href="{% url 'problems:problem_new' %}"> New Problem </a> </li>
                             <li> <a href="{% url 'problems:problem_draft_list' %}"> Drafts </a> </li>
                         {% else %}
-                            <li> <a href="#"> My Solutions </a> </li>
+                            <li> <a href="{% url 'problems:solution_list' %}"> My Solutions </a> </li>
                         {% endif %}
                         
                         <li> <a href="{% url 'logout' %}"> Logout </a> </li>

@@ -72,6 +72,15 @@ def problem_publish(request,pk):
 
 ###########################################################################################
 
+class SolutionListView(ListView, LoginRequiredMixin):
+    model = Solution
+    template_name = "solution_list.html"
+    login_url = 'login/'
+    redirect_field_name = 'problems/solution_detail.html'
+
+    def get_queryset(self):
+        return Solution.objects.order_by('created_date')
+
 @login_required
 def add_solution(request, pk):
     problem = get_object_or_404(Problem, pk=pk)

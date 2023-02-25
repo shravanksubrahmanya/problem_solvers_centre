@@ -8,7 +8,7 @@
                 <div class="date"> 
                     <p> Posted on: {{problem.published_date|date:"D M Y"}}</p>
                 </div>
-                {% comment %} <a href="{% url 'probel_detail' pk=post.pk %}"> Solutions: {{ post.approve_comments.count }} </a> {% endcomment %}
+                <a href="{% url 'problems:problem_detail' pk=problem.pk %}"> Solutions: {{ problem.approve_solutions.count }} </a>
             </div>
         {% endfor %}
     </div>

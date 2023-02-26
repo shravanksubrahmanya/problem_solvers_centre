@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib import auth
 from django.urls import reverse
+from django.db.models.signals import post_save
+
 # Create your models here.
 
 # for custom user
@@ -31,6 +33,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
+# to create a ProblemSolver or ProblemProvider object as soon as CustomUser is created
+def create_problem_solver_profile(sender, instance, created, **kwargs):
+    
+    if created:
+        if instance.user_type == 'ps':
+            ProblemSolver.objects.create(username = instance)
+        else:
+            ProblemProvider.objects.create(username = instance)
+    
+post_save.connect(create_problem_solver_profile, sender=CustomUser)
+
 '''
 Problem solver details
 '''
@@ -41,15 +54,15 @@ class ProblemSolver(models.Model):
         ('passport', 'Passport'),
     )
 
-    username = models.OneToOneField(CustomUser, related_name="ProblemSolver", verbose_name ="username", on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, verbose_name='Firstname ')
+    username = models.OneToOneField(CustomUser, related_name="ProblemSolver", verbose_name ="username", on_delete=models.CASCADE, null=True)
+    first_name = models.CharField(max_length=50, verbose_name='Firstname ', blank=True)
     last_name = models.CharField(max_length=50, blank=True, verbose_name='Lastname ')
     id_card_type = models.CharField(max_length=50, choices=id_card_type_choices, default='adhaar', verbose_name= "Personal identity proof type ")
-    id_card_number = models.CharField(max_length=10, verbose_name='Personal identity card number ')
-    address = models.CharField(max_length=200, verbose_name="Address ")
-    pin_code = models.CharField(max_length=6, verbose_name="Pin Code ")
-    ph_no = models.CharField(max_length=10, verbose_name="Phone Number ")
-    personal_description = models.TextField()
+    id_card_number = models.CharField(max_length=10, verbose_name='Personal identity card number ', blank=True)
+    address = models.CharField(max_length=200, verbose_name="Address ", blank=True)
+    pin_code = models.CharField(max_length=6, verbose_name="Pin Code ", blank=True)
+    ph_no = models.CharField(max_length=10, verbose_name="Phone Number ", blank=True)
+    personal_description = models.TextField(blank=True)
 
     def fullname(self):
         return self.first_name + " " + self.last_name
@@ -70,13 +83,13 @@ Problem Provider details
 
 class ProblemProvider(models.Model):
     username = models.OneToOneField(CustomUser, related_name="ProblemProvider", verbose_name= "username", on_delete=models.CASCADE)
-    provider_name = models.CharField(max_length=50, verbose_name="Organization name")
-    provider_brief = models.CharField(max_length=1000, verbose_name="Brief description")
-    govt_liscence_id = models.CharField(max_length=50, verbose_name="Liscence number")
-    address = models.CharField(max_length=500, verbose_name="Address ")
-    pin_code = models.CharField(max_length=6, verbose_name="Pin Code ")
-    ph_no = models.CharField(max_length=10, verbose_name="Phone Number ")
-    personal_description = models.TextField( blank= True, null=True)
+    provider_name = models.CharField(max_length=50, verbose_name="Organization name", blank=True)
+    provider_brief = models.CharField(max_length=1000, verbose_name="Brief description", blank=True)
+    govt_liscence_id = models.CharField(max_length=50, verbose_name="Liscence number", blank=True)
+    address = models.CharField(max_length=500, verbose_name="Address ", blank=True)
+    pin_code = models.CharField(max_length=6, verbose_name="Pin Code ", blank=True)
+    ph_no = models.CharField(max_length=10, verbose_name="Phone Number ", blank=True)
+    personal_description = models.TextField( blank= True)
 
     class Meta:
         verbose_name =  "ProblemProvider"

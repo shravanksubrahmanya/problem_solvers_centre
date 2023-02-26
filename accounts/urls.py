@@ -10,6 +10,6 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("problem_solver/<int:pk>", views.ProblemSolverDetailView.as_view(), name="problem_solver_account"),
     path("problem_provider/<int:pk>", views.ProblemProviderDetailView.as_view(), name="problem_provider_account"),
-    path("problem_solver/<int:pk>/create", views.ProblemSolverCreateView.as_view(), name="problem_solver_create"),
     path("problem_solver/<int:pk>/edit", views.ProblemSolverUpdateView.as_view(), name="problem_solver_edit"),
+    path("problem_provider/<int:pk>/edit", views.ProblemProviderUpdateView.as_view(), name="problem_provider_edit"),
 ]

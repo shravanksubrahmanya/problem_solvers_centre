@@ -1,4 +1,4 @@
-from accounts.forms import SignUpForm, ProblemSolverForm
+from accounts.forms import SignUpForm, ProblemSolverForm, ProblemProviderForm
 from .managers import CustomUserManager
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
@@ -30,16 +30,19 @@ class ProblemSolverDetailView(DetailView, LoginRequiredMixin):
     redirect_field_name = 'index.html'
 
 
-class ProblemSolverCreateView(CreateView, LoginRequiredMixin):
-    model = ProblemSolver
-    template_name = "accounts/problem_solver_form.html"
-    login_url = 'login/'
-    redirect_field_name = 'accounts/problem_solver_account.html'
-    form_class = ProblemSolverForm
-
 class ProblemSolverUpdateView(UpdateView, LoginRequiredMixin):
     model = ProblemSolver
     template_name = "accounts/problem_solver_form.html"
     login_url = 'login'
     redirect_field_name = 'accounts/problem_solver_account.html'
     form_class = ProblemSolverForm
+
+class ProblemProviderUpdateView(UpdateView, LoginRequiredMixin):
+    model = ProblemProvider
+    template_name = "accounts/problem_provider_form.html"
+    login_url = 'login/'
+    redirect_field_name = 'accounts/problem_provider_account.html'
+    form_class = ProblemProviderForm
+
+
+###################################################33

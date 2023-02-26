@@ -8,17 +8,22 @@
         <h2 class="username"> {{problemprovider.provider_name}} </h2>
 
         {% if problemprovider.provider_brief %}
-        <p>  {{ problemprovider.provider_brief }} </p>
+        <p>  {{ problemprovider.provider_brief|safe|linebreaksbr }} </p>
         {% endif %}
 
         <p> {{ problemprovider.govt_liscence_id }} </p>
-        <p> {{ problemprovider.address }} </p>
+        <p> {{ problemprovider.address|safe|linebreaksbr }} </p>
         <p> {{ problemprovider.pin_code }} </p>
         <p> {{ problemprovider.ph_no }} </p>
-        <p> {{ problemprovider.personal_description }} </p>
+        <p> {{ problemprovider.personal_description|safe|linebreaksbr }} </p>
+
         {% else %}
         <p> No Information Provided </p>
         {% endif %}
+
+        <a class = 'btn btn-primary' href="{% url 'accounts:problem_provider_edit' pk=user.ProblemProvider.pk %}"> 
+            <span class="glyphicon glyphicon-pencil"> </span>
+        </a>
     </div>
 
   

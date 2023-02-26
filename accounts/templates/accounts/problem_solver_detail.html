@@ -12,20 +12,16 @@
         {% endif %}
 
         <p>  {{ problemsolver.id_card_details}} </p>
-        <p> {{ problemsolver.address }} </p>
+        <p> {{ problemsolver.address|safe|linebreaksbr }} </p>
         <p> {{ problemsolver.pin_code }} </p>
         <p> {{ problemsolver.ph_no }} </p>
 
+        {% else %}
+        <p> No Information Provided </p>
+        {% endif %}
         <a class = 'btn btn-primary' href="{% url 'accounts:problem_solver_edit' pk=user.ProblemSolver.pk %}"> 
             <span class="glyphicon glyphicon-pencil"> </span>
         </a>
-
-        {% else %}
-        <p> No Information Provided </p>
-        <a class = 'btn btn-primary' href="{% url 'accounts:problem_solver_create' pk=user.ProblemSolver.pk %}"> 
-            <span class="glyphicon glyphicon-pencil"> </span>
-        </a>
-        {% endif %}
     </div>
 
   

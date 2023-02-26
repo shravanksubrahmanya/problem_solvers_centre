@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="user-details"> 
+        {% if problemsolver.first_name %}
+        <h2 class="username"> {{problemsolver.fullname}} </h2>
+
+        {% if problemsolver.personal_description %}
+        <p>  {{ problemsolver.personal_description|safe|linebreaksbr }} </p>
+        {% endif %}
+
+        <p>  {{ problemsolver.id_card_details}} </p>
+        <p> {{ problemsolver.address }} </p>
+        <p> {{ problemsolver.pin_code }} </p>
+        <p> {{ problemsolver.ph_no }} </p>
+
+        <a class = 'btn btn-primary' href="{% url 'accounts:problem_solver_edit' pk=user.ProblemSolver.pk %}"> 
+            <span class="glyphicon glyphicon-pencil"> </span>
+        </a>
+
+        {% else %}
+        <p> No Information Provided </p>
+        <a class = 'btn btn-primary' href="{% url 'accounts:problem_solver_create' pk=user.ProblemSolver.pk %}"> 
+            <span class="glyphicon glyphicon-pencil"> </span>
+        </a>
+        {% endif %}
+    </div>
+
+  
+{% endblock content %}
+

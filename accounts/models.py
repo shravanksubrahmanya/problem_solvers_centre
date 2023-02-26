@@ -31,38 +31,59 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
-
-# class User(auth.models.User, auth.models.PermissionsMixin):
-
-#     def __str__(self):
-#         return "@{}".format(self.username)
-
-    # def get_absolute_url(self):
-    #     return reverse("Solver_detail", kwargs={"pk": self.pk})
-
-
 '''
 Problem solver details
 '''
-# class ProblemSolverIndividual(models.Model):
-#     id_card_type_choices = (
-#         ('dl', 'Driving License'),
-#         ('adhaar', 'Adhaar Card'),
-#         ('passport', 'Passport'),
-#     )
+class ProblemSolver(models.Model):
+    id_card_type_choices = (
+        ('dl', 'Driving License'),
+        ('adhaar', 'Adhaar Card'),
+        ('passport', 'Passport'),
+    )
 
-#     username = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, unique=True)
-#     first_name = models.CharField(max_length=50, blank=True, verbose_name='Firstname ')
-#     last_name = models.CharField(max_length=50, blank=True, verbose_name='Lastname ')
-#     id_card_type = models.CharField(max_length=50, choices=id_card_type_choices, default='adhaar', verbose_name= "Personal identity proof type ")
-#     id_card_number = models.CharField(max_length=10, verbose_name='Personal identity card number ')
-#     adrress = models.CharField(max_length=200, verbose_name="Address ")
-#     pin_code = models.IntegerField(max_length=6, verbose_name="Pin Code ")
-#     ph_no = models.PhoneNumberField(max_length= 10, verbose_name="Phone Number ")
+    username = models.OneToOneField(CustomUser, related_name="ProblemSolver", verbose_name ="username", on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50, verbose_name='Firstname ')
+    last_name = models.CharField(max_length=50, blank=True, verbose_name='Lastname ')
+    id_card_type = models.CharField(max_length=50, choices=id_card_type_choices, default='adhaar', verbose_name= "Personal identity proof type ")
+    id_card_number = models.CharField(max_length=10, verbose_name='Personal identity card number ')
+    address = models.CharField(max_length=200, verbose_name="Address ")
+    pin_code = models.CharField(max_length=6, verbose_name="Pin Code ")
+    ph_no = models.CharField(max_length=10, verbose_name="Phone Number ")
+    personal_description = models.TextField()
+
+    def fullname(self):
+        return self.first_name + " " + self.last_name
+    
+    def id_card_details(self):
+        return self.id_card_type + ": "+ self.id_card_number
+
+    def __str__(self):
+        return self.first_name
+
+    def get_absolute_url(self):
+        return reverse("accounts:problem_solver_account", kwargs={"pk": self.pk})
 
 
-#     def __str__(self):
-#         return self.username
+'''
+Problem Provider details
+'''
 
-#     # def get_absolute_url(self):
-#     #     return reverse("ProblemSolverIndividual_detail", kwargs={"pk": self.pk})
+class ProblemProvider(models.Model):
+    username = models.OneToOneField(CustomUser, related_name="ProblemProvider", verbose_name= "username", on_delete=models.CASCADE)
+    provider_name = models.CharField(max_length=50, verbose_name="Organization name")
+    provider_brief = models.CharField(max_length=1000, verbose_name="Brief description")
+    govt_liscence_id = models.CharField(max_length=50, verbose_name="Liscence number")
+    address = models.CharField(max_length=500, verbose_name="Address ")
+    pin_code = models.CharField(max_length=6, verbose_name="Pin Code ")
+    ph_no = models.CharField(max_length=10, verbose_name="Phone Number ")
+    personal_description = models.TextField( blank= True, null=True)
+
+    class Meta:
+        verbose_name =  "ProblemProvider"
+        verbose_name_plural = "ProblemProviders"
+
+    def __str__(self):
+        return self.provider_name
+
+    def get_absolute_url(self):
+        return reverse("accounts:problem_provider_account", kwargs={"pk": self.pk})

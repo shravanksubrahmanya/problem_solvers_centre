@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="user-details container"> 
+        {% if problemprovider.provider_name %}
+        <h2 class="username"> {{problemprovider.provider_name}} </h2>
+
+        {% if problemprovider.provider_brief %}
+        <p>  {{ problemprovider.provider_brief }} </p>
+        {% endif %}
+
+        <p> {{ problemprovider.govt_liscence_id }} </p>
+        <p> {{ problemprovider.address }} </p>
+        <p> {{ problemprovider.pin_code }} </p>
+        <p> {{ problemprovider.ph_no }} </p>
+        <p> {{ problemprovider.personal_description }} </p>
+        {% else %}
+        <p> No Information Provided </p>
+        {% endif %}
+    </div>
+
+  
+{% endblock content %}
+

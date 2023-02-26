@@ -23,11 +23,16 @@
             {% comment %} custom css {% endcomment %}
             {% comment %} <link rel = "stylesheet" href="{% static 'problem_solvers_centre/css/master.css' %}"> {% endcomment %}
             <link rel = "stylesheet" href="{% static 'problem_solvers_centre/css/master.css' %}">
+            <link rel="stylesheet" href = "{% static 'css/details.css'%}">
 
             {% comment %} Fonts {% endcomment %}
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Russo+One&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            
+            {% comment %} font Oswald {% endcomment %}
+            <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -47,12 +52,13 @@
                         {% if user.user_type == 'pp' %}
                             <li> <a href="{% url 'problems:problem_new' %}"> New Problem </a> </li>
                             <li> <a href="{% url 'problems:problem_draft_list' %}"> Drafts </a> </li>
+                            <li> <a href="{% url 'logout' %}"> Logout </a> </li>
+                            <li> <a href="{% url 'accounts:problem_provider_account' pk=user.ProblemProvider.pk %}" > {{user.username}} </a> </li>
                         {% else %}
                             <li> <a href="{% url 'problems:solution_list' %}"> My Solutions </a> </li>
+                            <li> <a href="{% url 'logout' %}"> Logout </a> </li>
+                            <li> <a href="{% url 'accounts:problem_solver_account' pk=user.ProblemSolver.pk %}" > {{user.username}} </a> </li>
                         {% endif %}
-                        
-                        <li> <a href="{% url 'logout' %}"> Logout </a> </li>
-                        <li> <a> {{user.username}} </a> </li>
                     {% else %}
                     <li> <a href="{% url 'accounts:login' %}" class = "nav navbar-right"> Login </a> </li>
                     <li> <a href="{% url 'accounts:signup' %}"> Sign Up </a> </li>
@@ -62,7 +68,7 @@
         </nav>
 
 
-        <div> 
+        <div class="container"> 
             {% block content %}
 
             {% endblock content %}

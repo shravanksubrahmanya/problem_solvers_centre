@@ -1,11 +1,45 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from . import forms
-from django.views.generic import CreateView
+from accounts.forms import SignUpForm, ProblemSolverForm
 from .managers import CustomUserManager
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.views.generic import (TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView)
+from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from accounts.models import CustomUser, ProblemProvider, ProblemSolver
 
 # Create your views here.
 class SignUpView(CreateView):
-    form_class = forms.SignUpForm
+    form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
+
+
+class ProblemProviderDetailView(DetailView, LoginRequiredMixin):
+    model = ProblemProvider
+    template_name = "accounts/problem_provider_detail.html"
+    login_url = 'login/'
+    redirect_field_name = 'index.html'
+
+class ProblemSolverDetailView(DetailView, LoginRequiredMixin):
+    model = ProblemSolver
+    template_name = "accounts/problem_solver_detail.html"
+    login_url = 'login/'
+    redirect_field_name = 'index.html'
+
+
+class ProblemSolverCreateView(CreateView, LoginRequiredMixin):
+    model = ProblemSolver
+    template_name = "accounts/problem_solver_form.html"
+    login_url = 'login/'
+    redirect_field_name = 'accounts/problem_solver_account.html'
+    form_class = ProblemSolverForm
+
+class ProblemSolverUpdateView(UpdateView, LoginRequiredMixin):
+    model = ProblemSolver
+    template_name = "accounts/problem_solver_form.html"
+    login_url = 'login'
+    redirect_field_name = 'accounts/problem_solver_account.html'
+    form_class = ProblemSolverForm

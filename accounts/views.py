@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from . import forms
 from django.views.generic import CreateView
+from .managers import CustomUserManager
 
 # Create your views here.
 class SignUpView(CreateView):

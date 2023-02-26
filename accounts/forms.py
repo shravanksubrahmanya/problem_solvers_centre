@@ -1,12 +1,12 @@
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import get_user_model
+from accounts.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 
 class SignUpForm(UserCreationForm):
 
     class Meta:
-        fields = ('username', 'email', 'password1', 'password2')
-        model = get_user_model()
+        fields = ('user_type','username','email', 'password1', 'password2')
+        model = CustomUser # no braces here since a model is not callable
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.fields['username'].label = 'PSS Handle Name'
+    # def __init__(self, *args, **kwargs) -> None:
+    #     super().__init__(*args, **kwargs)

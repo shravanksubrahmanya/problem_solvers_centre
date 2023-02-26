@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1> Drafted Problems </h1>
+    <hr>
+    {% for problem in problem_list %}
+        <div class="problem"> 
+                <h1> <a href="{% url 'problems:problem_detail' pk=problem.pk %}"> {{problem.title}} </a> </h1>
+                <p class="date"> Created: {{problem.created_date|date:'D M Y'}}</p>
+                {% comment %} <p> {{ problem.text|safe|linebreaksbr|truncatechars:200 }} </p> {% endcomment %}
+        </div>
+    {% endfor %}
+{% endblock content %}
+

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="centerstage"> 
+        {% for problem in problem_list %}
+            <div class="problem_card"> 
+                <h1> <a href="{% url 'problems:problem_detail' pk=problem.pk %}"> {{problem.title}} </a></h1>
+                <div class="date"> 
+                    <p> Posted on: {{problem.published_date|date:"D M Y"}}</p>
+                </div>
+                <a href="{% url 'problems:problem_detail' pk=problem.pk %}"> Solutions: {{ problem.approve_solutions.count }} </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+

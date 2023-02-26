@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 class="posttitle loader"> {{problem.title}} </h1>
+    {% if problem.published_date %}
+        {{problem.published_date}}
+    {% else %}
+        <a class="btn btn-default" href="{% url 'problems:problem_publish' pk=problem.pk %}"> Publish </a>
+    {% endif %}
+    <p class="postcontent"> Reward is INR. {{problem.problem_reward}} </p>
+    <p class="postcontent"> Poblem category is {{problem.problem_category}} </p>
+    <p class="postcontent"> {{problem.problem_brief|safe|linebreaksbr}} </p>
+    <p class="postcontent"> {{problem.problem_description|safe|linebreaksbr}} </p>
+
+    {% if user.is_authenticated %}
+        <a class = 'btn btn-primary' href="{% url 'problems:problem_edit' pk=problem.pk %}"> 
+            <span class="glyphicon glyphicon-pencil"> </span>
+        </a>
+
+        <a class = 'btn btn-primary' href="{% url 'problems:problem_remove' pk=problem.pk %}"> 
+            <span class="glyphicon glyphicon-remove"> </span>
+        </a>
+    {% endif %}
+
+    <hr>
+
+    <a href="{% url 'problems:add_solution' pk=problem.pk %}" class="btn btn-primary btn-comment"> Add Solution</a>
+
+    <div class="container"> 
+        {% for solution in problem.solutions.all %}
+        <br>
+            {% if user.is_authenticated and solution.rejected_solution == False or solution.approved_solution and solution.rejected_solution == False %}
+                {{solution.created_date}}
+                {% if not solution.approved_solution %}
+                    {% if user.user_type == 'pp' %}
+                        <a class = 'btn btn-primary' href="{% url 'problems:solution_approve' pk=solution.pk %}"> 
+                            <span class="glyphicon glyphicon-ok"> </span>
+                        </a>
+                        <a class = 'btn btn-default' href="{% url 'problems:solution_reject' pk=solution.pk %}"> 
+                            <span class="glyphicon glyphicon-remove"> </span>
+                        </a>
+                    {% endif %}
+                    
+                    {% if user.user_type == 'ps' %}
+                        <a class = 'btn btn-default' href="{% url 'problems:solution_remove' pk=solution.pk %}"> 
+                            Delete
+                        </a>
+                    {% endif %}
+                {% endif %}
+                {% if solution.approved_solution %}
+                <p> Status: Approved </p>
+                {% else %}
+                <p> Status: Rejected </p>
+                {% endif %}
+                <p> {{solution.solution_title|safe|linebreaks}}</p>
+                <p> {{solution.solution_brief|safe|linebreaks}}</p>
+                <p> Posted by: {{solution.author}} </p>
+            {% endif %}
+            {% empty %}
+            <p> No Solution </p>
+        {% endfor %}
+    </div>
+    
+{% endblock content %}
+
